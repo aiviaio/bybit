@@ -1,4 +1,4 @@
-module github.com/hirokisan/bybit/v2
+module github.com/aiviaio/bybit
 
 go 1.17
 
