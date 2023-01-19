@@ -568,3 +568,217 @@ func (s *DerivativeCommonService) DerivativesIndexPriceKline(param DerivativesIn
 
 	return &res, nil
 }
+
+// ContractWalletBalanceParam :
+type ContractWalletBalanceParam struct {
+	Coin CoinContract `url:"coin,omitempty"`
+}
+
+// ContractWalletBalanceResponse :
+type ContractWalletBalanceResponse struct {
+	CommonV3Response `json:",inline"`
+	Result           ContractWalletBalanceResult `json:"result"`
+}
+
+// ContractWalletBalanceResult :
+type ContractWalletBalanceResult struct {
+	List []ContractWalletBalanceListItem `json:"list"`
+}
+
+// ContractWalletBalanceListItem :
+type ContractWalletBalanceListItem struct {
+	Coin             string `json:"coin"`
+	Equity           string `json:"equity"`
+	WalletBalance    string `json:"walletBalance"`
+	PositionMargin   string `json:"positionMargin"`
+	AvailableBalance string `json:"availableBalance"`
+	OrderMargin      string `json:"orderMargin"`
+	OccClosingFee    string `json:"occClosingFee"`
+	OccFundingFee    string `json:"occFundingFee"`
+	UnrealisedPnl    string `json:"unrealisedPnl"`
+	CumRealisedPnl   string `json:"cumRealisedPnl"`
+	GivenCash        string `json:"givenCash"`
+	ServiceCash      string `json:"serviceCash"`
+}
+
+// ContractWalletBalance :
+func (s *DerivativeCommonService) ContractWalletBalance(param ContractWalletBalanceParam) (*ContractWalletBalanceResponse, error) {
+	var res ContractWalletBalanceResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPrivately("/contract/v3/private/account/wallet/balance", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// ContractWalletFundRecordsParam :
+type ContractWalletFundRecordsParam struct {
+	StartTime      string       `url:"startTime,omitempty"`
+	EndTime        string       `url:"endTime,omitempty"`
+	WalletFundType string       `url:"walletFundType,omitempty"`
+	Coin           CoinContract `url:"coin,omitempty"`
+	Limit          string       `url:"limit,omitempty"`
+	Cursor         string       `url:"cursor,omitempty"`
+}
+
+// ContractWalletFundRecordsResponse :
+type ContractWalletFundRecordsResponse struct {
+	CommonV3Response `json:",inline"`
+	Result           ContractWalletFundRecordsResult `json:"result"`
+}
+
+// ContractWalletFundRecordsResult :
+type ContractWalletFundRecordsResult struct {
+	List           []ContractWalletFundRecordsListItem `json:"list"`
+	NextPageCursor string                              `json:"nextPageCursor"`
+}
+
+// ContractWalletFundRecordsListItem :
+type ContractWalletFundRecordsListItem struct {
+	Coin          string `json:"coin"`
+	Type          string `json:"type"`
+	Amount        string `json:"amount"`
+	WalletBalance string `json:"walletBalance"`
+	ExecTime      string `json:"execTime"`
+}
+
+// ContractWalletFundRecords :
+func (s *DerivativeCommonService) ContractWalletFundRecords(param ContractWalletFundRecordsParam) (*ContractWalletFundRecordsResponse, error) {
+	var res ContractWalletFundRecordsResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPrivately("/contract/v3/private/account/wallet/fund-records", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// ContractTradeRecordsParam :
+type ContractTradeRecordsParam struct {
+	OrderId   string   `url:"orderId,omitempty"`
+	Symbol    string   `url:"symbol"`
+	ExecType  ExecType `url:"execType,omitempty"`
+	StartTime string   `url:"startTime,omitempty"`
+	EndTime   string   `url:"endTime,omitempty"`
+	Limit     *int     `url:"limit,omitempty"`
+	Cursor    string   `url:"cursor,omitempty"`
+}
+
+// ContractTradeRecordsResponse :
+type ContractTradeRecordsResponse struct {
+	CommonV3Response `json:",inline"`
+	Result           ContractTradeRecordsResult `json:"result"`
+}
+
+// ContractTradeRecordsResult :
+type ContractTradeRecordsResult struct {
+	List           []ContractTradeRecordsResultListItem `json:"list"`
+	NextPageCursor string                               `json:"nextPageCursor"`
+}
+
+// ContractTradeRecordsResultListItem :
+type ContractTradeRecordsResultListItem struct {
+	Symbol           string `json:"symbol"`
+	ExecFee          string `json:"execFee"`
+	ExecId           string `json:"execId"`
+	ExecPrice        string `json:"execPrice"`
+	ExecQty          string `json:"execQty"`
+	ExecType         string `json:"execType"`
+	ExecValue        string `json:"execValue"`
+	FeeRate          string `json:"feeRate"`
+	LastLiquidityInd string `json:"lastLiquidityInd"`
+	LeavesQty        string `json:"leavesQty"`
+	OrderId          string `json:"orderId"`
+	OrderLinkId      string `json:"orderLinkId"`
+	OrderPrice       string `json:"orderPrice"`
+	OrderQty         string `json:"orderQty"`
+	OrderType        string `json:"orderType"`
+	StopOrderType    string `json:"stopOrderType"`
+	Side             string `json:"side"`
+	ExecTime         string `json:"execTime"`
+	ClosedSize       string `json:"closedSize"`
+}
+
+// ContractTradeRecords :
+func (s *DerivativeCommonService) ContractTradeRecords(param ContractTradeRecordsParam) (*ContractTradeRecordsResponse, error) {
+	var res ContractTradeRecordsResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPrivately("/contract/v3/private/execution/list", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+// ContractClosedProfitAndLossParam :
+type ContractClosedProfitAndLossParam struct {
+	Symbol    string `url:"symbol"`
+	StartTime string `url:"startTime,omitempty"`
+	EndTime   string `url:"endTime,omitempty"`
+	Limit     *int   `url:"limit,omitempty"`
+	Cursor    string `url:"cursor,omitempty"`
+}
+
+// ContractClosedProfitAndLossResponse :
+type ContractClosedProfitAndLossResponse struct {
+	CommonV3Response `json:",inline"`
+	Result           ContractClosedProfitAndLossResult `json:"result"`
+}
+
+// ContractClosedProfitAndLossResult :
+type ContractClosedProfitAndLossResult struct {
+	List           []ContractClosedProfitAndLossListItem `json:"list"`
+	NextPageCursor string                                `json:"nextPageCursor"`
+}
+
+// ContractClosedProfitAndLossListItem :
+type ContractClosedProfitAndLossListItem struct {
+	Symbol        string `json:"symbol"`
+	OrderId       string `json:"orderId"`
+	Side          string `json:"side"`
+	Qty           string `json:"qty"`
+	OrderPrice    string `json:"orderPrice"`
+	OrderType     string `json:"orderType"`
+	ExecType      string `json:"execType"`
+	ClosedSize    string `json:"closedSize"`
+	CumEntryValue string `json:"cumEntryValue"`
+	AvgEntryPrice string `json:"avgEntryPrice"`
+	CumExitValue  string `json:"cumExitValue"`
+	AvgExitPrice  string `json:"avgExitPrice"`
+	ClosedPnl     string `json:"closedPnl"`
+	FillCount     string `json:"fillCount"`
+	Leverage      string `json:"leverage"`
+	CreatedAt     string `json:"createdAt"`
+}
+
+// ContractClosedProfitAndLoss :
+func (s *DerivativeCommonService) ContractClosedProfitAndLoss(param ContractClosedProfitAndLossParam) (*ContractClosedProfitAndLossResponse, error) {
+	var res ContractClosedProfitAndLossResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := s.client.getPrivately("/contract/v3/private/position/closed-pnl", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}

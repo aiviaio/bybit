@@ -10,6 +10,18 @@ const (
 	SymbolDerivativeBTC31MAR23_40000C = SymbolDerivative("BTC-31MAR23-40000-C")
 )
 
+// CoinContract :
+type CoinContract string
+
+const (
+	CoinContractBTC  = CoinContract("BTC")
+	CoinContractETH  = CoinContract("ETH")
+	CoinContractEOS  = CoinContract("EOS")
+	CoinContractXRP  = CoinContract("XRP")
+	CoinContractDOT  = CoinContract("DOT")
+	CoinContractUSDT = CoinContract("USDT")
+)
+
 // CategoryDerivative :
 type CategoryDerivative string
 

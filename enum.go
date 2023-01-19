@@ -177,6 +177,8 @@ const (
 	ExecTypeFunding = ExecType("Funding")
 	// ExecTypeBustTrade :
 	ExecTypeBustTrade = ExecType("BustTrade")
+	// ExecTypeSettle :
+	ExecTypeSettle = ExecType("Settle")
 )
 
 // Direction :

@@ -11,6 +11,12 @@ type DerivativeContractServiceI interface {
 	DerivativesInstrumentsForOption(DerivativesInstrumentsForOptionParam) (*DerivativesInstrumentsForOptionResponse, error)
 	DerivativesMarkPriceKline(DerivativesMarkPriceKlineParam) (*DerivativesMarkPriceKlineResponse, error)
 	DerivativesIndexPriceKline(DerivativesIndexPriceKlineParam) (*DerivativesIndexPriceKlineResponse, error)
+
+	// Account Data Endpoints
+	ContractWalletBalance(ContractWalletBalanceParam) (*ContractWalletBalanceResponse, error)
+	ContractWalletFundRecords(ContractWalletFundRecordsParam) (*ContractWalletFundRecordsResponse, error)
+	ContractTradeRecords(ContractTradeRecordsParam) (*ContractTradeRecordsResponse, error)
+	ContractClosedProfitAndLoss(ContractClosedProfitAndLossParam) (*ContractClosedProfitAndLossResponse, error)
 }
 
 // DerivativeContractService :
