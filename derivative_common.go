@@ -669,8 +669,8 @@ type ContractTradeRecordsParam struct {
 	OrderId   string   `url:"orderId,omitempty"`
 	Symbol    string   `url:"symbol"`
 	ExecType  ExecType `url:"execType,omitempty"`
-	StartTime string   `url:"startTime,omitempty"`
-	EndTime   string   `url:"endTime,omitempty"`
+	StartTime int      `url:"startTime,omitempty"`
+	EndTime   int      `url:"endTime,omitempty"`
 	Limit     *int     `url:"limit,omitempty"`
 	Cursor    string   `url:"cursor,omitempty"`
 }
