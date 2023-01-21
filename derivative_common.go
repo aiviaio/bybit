@@ -729,8 +729,8 @@ func (s *DerivativeCommonService) ContractTradeRecords(param ContractTradeRecord
 // ContractClosedProfitAndLossParam :
 type ContractClosedProfitAndLossParam struct {
 	Symbol    string `url:"symbol"`
-	StartTime string `url:"startTime,omitempty"`
-	EndTime   string `url:"endTime,omitempty"`
+	StartTime int    `url:"startTime,omitempty"`
+	EndTime   int    `url:"endTime,omitempty"`
 	Limit     *int   `url:"limit,omitempty"`
 	Cursor    string `url:"cursor,omitempty"`
 }
