@@ -26,7 +26,8 @@ type AccountAssetQueryInternalTransferListResponse struct {
 
 // AccountAssetQueryInternalTransferListResult :
 type AccountAssetQueryInternalTransferListResult struct {
-	List []AccountAssetQueryInternalTransferListItem `json:"list"`
+	List   []AccountAssetQueryInternalTransferListItem `json:"list"`
+	Cursor string                                      `json:"cursor"`
 }
 
 // AccountAssetQueryInternalTransferListItem :
