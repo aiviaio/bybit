@@ -105,3 +105,50 @@ func (a *AccountAssetService) QueryMasterSubTransferList(param AccountAssetQuery
 
 	return &res, nil
 }
+
+// AccountAssetQueryInternalDepositRecordsListParam :
+type AccountAssetQueryInternalDepositRecordsListParam struct {
+	Coin      CoinContract `url:"coin,omitempty"`
+	StartTime int          `url:"startTime,omitempty"`
+	EndTime   int          `url:"endTime,omitempty"`
+	Limit     int          `url:"limit,omitempty"`
+	Cursor    string       `url:"cursor,omitempty"`
+}
+
+// AccountAssetQueryInternalDepositRecordsListResponse :
+type AccountAssetQueryInternalDepositRecordsListResponse struct {
+	CommonV3Response `json:",inline"`
+	Result           AccountAssetQueryInternalDepositRecordsListResult `json:"result"`
+}
+
+// AccountAssetQueryInternalDepositRecordsListResult :
+type AccountAssetQueryInternalDepositRecordsListResult struct {
+	List           []AccountAssetQueryInternalDepositRecordsListItem `json:"rows"`
+	NextPageCursor string                                            `json:"nextPageCursor"`
+}
+
+// AccountAssetQueryInternalDepositRecordsListItem :
+type AccountAssetQueryInternalDepositRecordsListItem struct {
+	Id          string `json:"id"`
+	Type        int    `json:"type"`
+	Coin        string `json:"coin"`
+	Amount      string `json:"amount"`
+	Status      int    `json:"status"`
+	Address     string `json:"address"`
+	CreatedTime string `json:"createdTime"`
+}
+
+func (a *AccountAssetService) QueryInternalDepositRecordsList(param AccountAssetQueryInternalDepositRecordsListParam) (*AccountAssetQueryInternalDepositRecordsListResponse, error) {
+	var res AccountAssetQueryInternalDepositRecordsListResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := a.client.getPrivately("/asset/v3/private/deposit/internal-deposit-record/query", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
