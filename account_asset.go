@@ -55,3 +55,53 @@ func (a *AccountAssetService) QueryInternalTransferList(param AccountAssetQueryI
 
 	return &res, nil
 }
+
+// AccountAssetQueryMasterSubTransferListParam :
+type AccountAssetQueryMasterSubTransferListParam struct {
+	TransferId string       `url:"transferId,omitempty"`
+	Coin       CoinContract `url:"coin,omitempty"`
+	Status     string       `url:"status,omitempty"`
+	StartTime  int          `url:"startTime,omitempty"`
+	EndTime    int          `url:"endTime,omitempty"`
+	Limit      int          `url:"limit,omitempty"`
+	Cursor     string       `url:"cursor,omitempty"`
+}
+
+// AccountAssetQueryMasterSubTransferListResponse :
+type AccountAssetQueryMasterSubTransferListResponse struct {
+	CommonV3Response `json:",inline"`
+	Result           AccountAssetQueryMasterSubTransferListResult `json:"result"`
+}
+
+// AccountAssetQueryMasterSubTransferListResult :
+type AccountAssetQueryMasterSubTransferListResult struct {
+	List           []AccountAssetQueryMasterSubTransferListItem `json:"list"`
+	NextPageCursor string                                       `json:"nextPageCursor"`
+}
+
+// AccountAssetQueryMasterSubTransferListItem :
+type AccountAssetQueryMasterSubTransferListItem struct {
+	TransferId  string `json:"transferId"`
+	Coin        string `json:"coin"`
+	Amount      string `json:"amount"`
+	MemberId    int    `json:"memberId"`
+	SubMemberId string `json:"subMemberId"`
+	Timestamp   string `json:"timestamp"`
+	Status      string `json:"status"`
+	Type        string `json:"type"`
+}
+
+func (a *AccountAssetService) QueryMasterSubTransferList(param AccountAssetQueryMasterSubTransferListParam) (*AccountAssetQueryMasterSubTransferListResponse, error) {
+	var res AccountAssetQueryMasterSubTransferListResponse
+
+	queryString, err := query.Values(param)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := a.client.getPrivately("/asset/v3/private/transfer/sub-member-transfer/list/query", queryString, &res); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
