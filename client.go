@@ -122,7 +122,7 @@ func (c *Client) populateSignature(src url.Values) url.Values {
 
 	src.Add("api_key", c.key)
 	src.Add("timestamp", now)
-	src.Add("recv_window", "7000")
+	src.Add("recv_window", "10000")
 	src.Add("sign", getSignature(src, c.secret))
 
 	return src
@@ -139,7 +139,7 @@ func (c *Client) populateSignatureForBody(src []byte) []byte {
 
 	body["api_key"] = c.key
 	body["timestamp"] = now
-	body["recv_window"] = 7000
+	body["recv_window"] = 10000
 	body["sign"] = getSignatureForBody(body, c.secret)
 
 	result, err := json.Marshal(body)
